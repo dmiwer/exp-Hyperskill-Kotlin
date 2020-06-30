@@ -1,0 +1,11 @@
+.idea/
+problems/
+test/
+build/
+out/
+
+*.yaml
+!course-info.yaml
+!lesson-info.yaml
+
+*gradle*

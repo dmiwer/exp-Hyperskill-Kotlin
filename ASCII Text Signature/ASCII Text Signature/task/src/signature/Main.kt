@@ -1,7 +1,10 @@
 package signature
 
+import java.util.*
+
 fun main() {
-    println(" _____________\n" +
-            "| Hyper Skill |\n" +
-            " ¯¯¯¯¯¯¯¯¯¯¯¯¯")
+    val name = Scanner(System.`in`).nextLine()
+    println("*".repeat(name.length + 4))
+    println("* $name *")
+    println("*".repeat(name.length + 4))
 }

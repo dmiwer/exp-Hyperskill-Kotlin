@@ -1,18 +1,11 @@
 package signature
 
+import java.io.File
+import java.nio.file.Files
 import java.util.*
+import java.nio.file.Path
 
 fun main() {
-//    val name = Scanner(System.`in`).nextLine()
-//    println("*".repeat(name.length + 4))
-//    println("* $name *")
-//    println("*".repeat(name.length + 4))
-    val scan = Scanner(System.`in`)
-    print("Enter name and surname: ")
-    val name = scan.nextLine().toLowerCase()
-    print("Enter person's status: ")
-    val status = scan.nextLine()
-    println()
     val arr = arrayOf(
             arrayOf("____", "|__|", "|  |"),
             arrayOf("___ ", "|__]", "|__]"),
@@ -41,20 +34,37 @@ fun main() {
             arrayOf("_   _", " \\_/ ", "  |  "),
             arrayOf("___ ", "  / ", " /__")
     )
-    var name_len = 0
-    for (c in name)
-        name_len += if (c == ' ') 5 else arr[c - 'a'][0].length + 1
-    name_len--
-    val status_len = status.length
-    val max_len = Math.max(name_len, status_len)
-    val name_offset = (max_len - name_len) / 2
-    println("*".repeat(max_len + 6))
-    for (i in 0..2) {
-        print("*  " + " ".repeat(name_offset))
-        for (c in name)
-            print((if (c == ' ') "    " else arr[c - 'a'][i]) + " ")
-        print(" ".repeat((max_len - name_len + 1) / 2) + " *\n")
+    val list = File("C:\\Dm\\Teach\\Hyperskill\\Kotlin\\ASCII Text Signature\\ASCII Text Signature\\task\\src\\signature\\roman.txt").readLines()
+
+    val scan = Scanner(System.`in`)
+    print("Enter name and surname: ")
+    val name = scan.nextLine()
+    print("Enter person's status: ")
+    val status = scan.nextLine().toLowerCase()
+    var nameLen = -1
+    name.forEach { nameLen += if (it == ' ') 10 else list[getOffset(it)].length }
+    var statusLen = -1
+    status.forEach { statusLen += if (it == ' ') 5 else arr[it - 'a'][0].length + 1 }
+    val maxLen = Math.max(nameLen, statusLen)
+    println("8".repeat(maxLen + 9))
+    for (i in 0 until 10) {
+        print("88  " + " ".repeat((maxLen - nameLen) / 2))
+        name.forEach { print((if (it == ' ') "          " else list[getOffset(it) + i])) }
+        print(" ".repeat((maxLen - nameLen + 1) / 2) + "  88\n")
     }
-    println("*  " + " ".repeat((max_len - status_len) / 2) + status + " ".repeat((max_len - status_len + 1) / 2) + "  *")
-    println("*".repeat(max_len + 6))
+    for (i in 0..2) {
+        print("88  " + " ".repeat((maxLen - statusLen) / 2))
+        for (c in status)
+            print((if (c == ' ') "    " else arr[c - 'a'][i]) + " ")
+        print(" ".repeat((maxLen - statusLen + 1) / 2) + "  88\n")
+    }
+    println("8".repeat(maxLen + 9))
+}
+
+fun getOffset(char: Char): Int {
+    return when(char) {
+        in 'a'..'z' -> 2 + 11 * (char - 'a')
+        in 'A'..'Z' -> 288 + 11 * (char - 'A')
+        else -> 0
+    }
 }
